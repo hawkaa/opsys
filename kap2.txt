@@ -90,5 +90,10 @@ Dårlig løsning: Disablign av interrupts. Dette går i OS-kode, men ikke bruker
 #petersons_solution: Holde en liste over interesserte prosesser, og bare holde hvis det er andre som er interesserte.
 
 #TSL_instruction: atomisk intruksjon på prosessoren.
+Enkle mekanismer med denne instruksjonen sitter i en loop og venter.
+
+#producer_consumer_problem:
+Felles buffer. En kan jobbe fortere enn den andre. Problemer ved at count-variablen kan aksesseres samtidig og oppvåkningssignal til en prosess som enda ikke sover er mistet. Løsning kan være å sette en "wakeup bit".
+
 
 
