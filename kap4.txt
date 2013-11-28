@@ -1,0 +1,91 @@
+#hva krever vi an en fil?
+	1. Lagre store mengder data
+	2. Overleve etter at en prosess har dødd
+	3. Flere prosesser må kunne få tak i filen samtidig.
+Dette er en abstraksjon som heter "the file". Sammen med abstraksjonen av tråder, prosesser, adresserom er denne viktig.
+
+Filer er logiske enheter men informasjon lagret av en prosess.
+Persistent, fjernes bare når eieren fjerner den.
+Delen i OS som har med filhåndtering å gjøre hete r file system. 
+
+#Files
+Abstraksjonsmekanisme.
+
+#file_types
+vanlige filer
+directories
+character og block special files (avhengig av aksessmetode)
+
+Exefil:
+	- Header
+	- text
+	- data
+	- relocation bits
+	-Symbol table
+	
+Hvert os må gjenkjenne sin egen executable.
+
+#file_access
+#sequential_access: Alt må leses i rekkefølge.
+#random_access_files: Kan endre rekkefølge. 
+
+#file_attributes
+Metadata, om eier, beskyttelse og diverse.
+
+#Directories
+Absolute paths are always unique.
+Working directory: Hvor du kjører fra, slik at du kan ha relative stier derifra.
+. - Current
+.. - Parent
+
+#file_system_implementation
+Filsystemet er lagret på disk. Deler opp en disk i én eller flere partisjoner.
+Sektor 0 er MBR (Master Boot Record). Slutten av denne er partisjonstabellen.
+Ved oppstart leser den boot-blokken til den aktive partisjonen.
+Partisjonen kan ha en superblokk, inneholder alle nøkkelparametre om filsystemet.
+
+
+#implementing_files
+
+#continious_allocation
+Lagre alle filer i en kontinuerlig rekke. To fordeler: Lagre bare to numre, og lese en fil sekvensielt går skitfort.
+Blir fragmentert.
+CD-ROM er fint for dette.
+
+#linked_list_allocation
+Lenket liste med blokker.
+mister ikke plass.
+Random aksess er skittregt, fordi du må lete deg frem til blokken.
+Kan gjøre dette mye raskere ved å ha den lenkede listen i minnet. Dette er en FAT (file allocation table). Må fortsatt følge kjeden, men går mye fortere fordi alt er i minnet. Men tabellen kan bli stor, skalerer dårlig.
+
+#i-node
+Hver fil har en i-node (index-node), som lister filattributter og alle blokkene.
+Forskjellen her mellom i-noder og FAT er at man trenger kun å ha oppe i-noden til filer som er åpne i minnet.
+Hvis en fil har flere blokker enn plass til i en i-node. Løsning: siste blokk er en peker til neste blokk med flere adresser.
+
+#implementing_directories
+Hoved bruksområde er å mappe ascii-navn over til informasjon som kan burkes for å finne data.
+Med filsystem som bruker inoder, kan man bruke filnavn og i-node-nummer.
+
+Ikke fast lengde på filene, ha termineringskarakterer eller lengdebeskrivelser i stedet.
+Man kan hashe filer for å unngå lineært søk i et directory. Man kan også cache.
+
+#shared_files
+Tre blir til DAG
+#hard_linking: Flere mapper til samme i-node
+#symbolic_linking: Egen filtype som slår opp hvor filen egentlig er. Fordel er at de kan linke til filer overalt i verden.
+#hard_linking krever at du vet hvor mange directories som har referanse til filen.
+
+#journaling_file_system
+Ideen er å ha en logg som man skriver til før man skriver til filen. Denne brukes ved systemkræsj. Dette heter #journaling_file_system.
+Brukes av ext3, NTFS
+
+Eksempel. Hva gjøres når en fil sletter:
+	Fjerne filen fra directory
+	løsne i-noden
+	løsne diskblokker
+
+Systemet kan kræsje i mellom disse.
+Når et jfs gjør dette skriver den ned alle handlinger til disken først.
+Vitkig at alle operasjoner er #idempotent, som gjør at de kan gjøres så mange ganger som mulig uten at det blir tull.
+Kan abstraheres til transaksjoner med begin og end, slik at flere oprasjoner blir atomiske.
