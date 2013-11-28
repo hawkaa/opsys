@@ -1,0 +1,8 @@
+#memory_manager
+The piece fo the system that manages the memory hierarchy.
+
+#no_memory_abstraciton
+absolute adresses.
+Not possible to have two running programs in memory at the same time.
+User programs can wipe out the operating syste, unless its ROM.
+Kan få det parallelt her, men i form av tråder.
