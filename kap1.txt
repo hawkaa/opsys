@@ -8,4 +8,13 @@ Med andre ord: En prosess er fundamentalt sett en "boks" som holder all informas
 Når prosessen blir byttet ut, lagres ressursene i process table.
 Tilknyttet prosessen har vi også:
 	- UID
+Man kan kalle systemkall fork() i en prosess og alle variablene er kopiert.
+Prosesser i UNIX har oppdelt minne:
+	- Tekstsegment (programkode)
+	- Datasegment (variable)
+	- Stakk-segment (you know)
+
 	
+#systemcalls
+Mellomfjeset mellom brukere og operativsystemet handler om abstraksjoner.
+Hvis man trenger en "system service", må man eksekvere en trap-instruksjon for å gi kontroll til OS. OS utfører og gir kontrollen tilbake til programmet. Systemkall er det samme som et prosedyrekall, men bare at prosedyren må ned i kernel mode.
