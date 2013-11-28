@@ -46,3 +46,13 @@ Awesome word.
 #threads
 Hovedgrunnen er at man har flere ting som foregår samtidig. Man får en enklere programmeringsmodell.
 Dette er det samme som prosesser, men det er forskjeller. Tråder ser samme data. Billigere å lage.
+Kan være mer effektivt med mye IO.
+Nyttig på flerkjerne-prosessorer.
+Man kan ha tråder med blokkerende kall. "Blocking system calls make programming easier, and parallelism improves performance"
+Tråden har en programteller som forteller hvilken intstruksjon som skal kjøres neste gang. Har registre, stakk.
+Tråder samarbeider, de sloss ikke om ressursene.
+Finnes Pthreads, POSIX-standard for tråder.
+
+#threads_user_kernel_space
+
+
