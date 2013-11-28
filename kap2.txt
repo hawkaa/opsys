@@ -76,3 +76,18 @@ Tråder gjør det enkelt å utveksle data, men kan likevel komme i veien for hve
 Spooling kan gjøre dette (legge inn filer som behandles siden)
 Race conditions er noe drit.
 
+#critical_region
+En god løsning:
+	- Ingen prosesser kan være inni sin kritiske region samtidig
+	- Ingen antagelser om hastighet og antall CPU
+	- Ingen prosess som er utenfor sin kritiske region kan blokkere andre prosesser.
+	- Ingen prosess skal trenge å vente evig på å komme inn i sin kritiske rigon.
+	
+Dårlig løsning: Disablign av interrupts. Dette går i OS-kode, men ikke brukerkode (glemme å skru på).
+
+#spin_lock: A lock that uses busy waiting.
+
+#petersons_solution: Holde en liste over interesserte prosesser, og bare holde hvis det er andre som er interesserte.
+
+#TSL_instruction: atomisk intruksjon på prosessoren.
+
