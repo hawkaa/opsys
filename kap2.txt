@@ -91,3 +91,4 @@ Dårlig løsning: Disablign av interrupts. Dette går i OS-kode, men ikke bruker
 
 #TSL_instruction: atomisk intruksjon på prosessoren.
 
+
