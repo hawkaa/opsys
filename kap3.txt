@@ -6,3 +6,21 @@ absolute adresses.
 Not possible to have two running programs in memory at the same time.
 User programs can wipe out the operating syste, unless its ROM.
 Kan få det parallelt her, men i form av tråder.
+
+Går an å tilknytte en nøkkel bare OS kan skrive til hver prosess, men da må man ha #static_relocation
+
+#address_space
+Finne på en ny instruksjon. Er et sett med adresser som en prosses kan bruke, en prosess har et adresserom for seg selv.
+base- og limit-registre. Må være beskyttet av OS.
+Operasjon per minnereferanse: addisjon og sjekk av lengde (limit)
+Swapping må til for å lagre prosess på disk. Virtual_memory er noe annet, lar delvise programmer ligge i iminnet.
+Swapping kan være vanskelig å få til, særlig for prossesser som vokser. Legg inn litt ekstra plass for de.
+Håndtering av frie plasser kan skje med bitmap og med lenkede lister.
+	First fit: opplagt
+	Next fit: Husker hvor den fant plass sist og begynner søket der
+	best fit: finner minste hull.
+	worst fit: største hull
+	quick fit: Holder styr på en rekke "vanlige" størrelser.
+	
+	
+#virtual_memory
