@@ -96,4 +96,14 @@ Enkle mekanismer med denne instruksjonen sitter i en loop og venter.
 Felles buffer. En kan jobbe fortere enn den andre. Problemer ved at count-variablen kan aksesseres samtidig og oppvåkningssignal til en prosess som enda ikke sover er mistet. Løsning kan være å sette en "wakeup bit".
 
 
+#semaphore
+Trengte en måte å lagre antall wakeups for fremtidig bruk. Kan ha verdien 0 og oppover.
+To operasjoner:
+	down: Dekrementerer telleren. Hvis verdien er null, blir prosessen satt til å sove uten å utføre oprasjonen.
+	up: Øker telleren. Hvis noen sover på semaphoren, blir en tilfeldig prosess vekket opp.
+Hver operasjon må være atomisk! Kan implementeres ved systemkall, å disable alle interrupts mens operasjonen pågår. Ved fler-kjerne, kan man beskytte med TSL.
+
+#mutex
+garanterer at bare én prosess er i sin region av ganger (initiert til 1).
+Kaller thread yield når den ikke får lås. GOD STEMNING!
 
