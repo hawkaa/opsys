@@ -1,0 +1,13 @@
+#process
+Abstraciton of a running program.
+Conceptually, each process has its own CPU.
+Han program, input, output and a state.
+
+#process_creation
+
+
+#process_vs_program
+Recipe is the program, the computer scientist is the processor and the cake ingredients are the input data. The process is the activity of baking the cake.
+
+#pseudoparallelism
+Awesome word.
