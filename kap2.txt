@@ -64,5 +64,15 @@ Problemer med user space:
 	- Alle tråder må frivillig gi opp CPU, siden det ikke finnes noen interrupts.
 	- Mange applikasjoner som støtter flertråd, må gjøre mange systemkall uansett.
 	
-
+Problemer med kernel space:
+	- Dyrt.
+Fordeler:
+	- Lettere med blocking calls.
+	
+	
+#interprocess_communication
+How to make processes communicate and interleave.
+Tråder gjør det enkelt å utveksle data, men kan likevel komme i veien for hverandre.
+Spooling kan gjøre dette (legge inn filer som behandles siden)
+Race conditions er noe drit.
 
