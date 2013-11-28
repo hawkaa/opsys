@@ -1,0 +1,6 @@
+#prosess
+Dette er et program under eksekvering. Ved hver prosess er det knyttet et adresserom. Dette rommet inneholder:
+	- Executable
+	- Data
+	- Stack
+Ved hver prosess er det tilknyttet 
