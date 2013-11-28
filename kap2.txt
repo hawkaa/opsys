@@ -105,5 +105,73 @@ Hver operasjon må være atomisk! Kan implementeres ved systemkall, å disable a
 
 #mutex
 garanterer at bare én prosess er i sin region av ganger (initiert til 1).
-Kaller thread yield når den ikke får lås. GOD STEMNING!
+Kaller thread yield når den ikke får lås. GOD STEMNING! Ingen kall til kernel, så effektivt.
 
+#monitor
+mutex er skummelt fordi man må passe på rekkefølgen, blir deadlocks av sånt.
+Det er en samling av prosedyrer, variable og datastrukturer i en modul. Prosesser kan bare kalle prosedyrer til en monitor, det interne er privat. Inni en monitor kan bare én prosess være inne av gangen. Dette er kompilatoren sin jobb, færre muligheter for feil.
+Innfører #condition_variable. Kan kalle vent, slik at en annen slipper inn. Etter den andre er ferdig, kaller den signal for å vekke.
+Java bruker dette konseptet gjennom "synchronized"
+
+#semaphore_vs_monitor
+monitor trenger støtte fra språket, semaphores er lett å sette inn hvor som helst.
+
+#barrior
+En prosess må vente her til alle prosesser har kommet hit.
+
+
+#SCHEDULING
+Må velge hva som skal kjøres neste gang.
+Dyrt å bytte prosseser.
+to typer: Compute-bound og I/OBound. I/O bør få kjøre først, siden den kommer til å være kjapt ferdig med CPU.
+
+#nonpreemtive_scheduling: Picks a process to run and waits for it to block.
+#preemtive_scheduling: motsatt av over.
+
+Litt forskjellige fokus her:
+	Alle systemer:
+		Fairness - Fair share
+		Policy
+		Balance - Alt skal være opptatt
+	Batch
+		Throughput
+		Turnaround
+		CPU utilization
+	Interactive
+		Responstid
+		Proportionality.
+	Real-time systems
+		Deadlines
+		Predictability
+
+
+#first_come_first_served
+FIFO-kø. Simple stuff.
+
+#shortest_job_first
+Bedre turnaround
+
+#shortest remaining_time
+omtrent det samme som over.
+
+#round_robin
+tidskvantum. For kort kvantum: Mister effektivitet (for mye overhead). For stort kvantum: Dårlig responstid.
+
+#priority_scheduling
+Senker prioriteten for hver kjøring, slik at en ikke kjører evig. Kan ha klasser og round robin i hver klasse.
+
+#shortest_process_next
+Historikk som regner ut hvor lang hver prosess er (vektet). Kjør deretter prosessen som er kortest.
+
+#guaranteed_scheduling
+du er garantert 1/n av prosessoren. Holder styr på hvor mye den har hatt og h
+
+#lottery_scheduling
+Hver prosses får lodd.
+
+#fair_share_scheduling
+Har med brukeren å gjøre, uavhengig av antall prosesser.
+
+#scheduling_in_real_time
+hver prossess trenger C sekunder over en periode P er dette mulig hvis summen av C/P <1
+statisk - Planlegge før, dynamisk - Planlegge underveis
