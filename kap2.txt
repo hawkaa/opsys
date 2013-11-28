@@ -16,9 +16,33 @@ Technically, all are made from a process issuing a system call.
 	2. Errlor exit
 	3. Fatal error
 	4. Killed by another process
+	
+#process_state
+	1. Running
+	2. Ready
+	3. Blocked
+	
+#process_implementation
+Systemet opprettholder en "process table", inneholder stackpointer, program counter osv osv, slik at den kan restartes.
+
+#interrupt
+#interrupt vector: Address of the interrupt service procedure.
+Alle interrupts starter med å lagre registrene i prosesstabellen. 
+	1. Hardware stacks program counter
+	2. hardware loads new program counter from vector
+	3. Assebly saves registers
+	4. Assembly language sets up new stack
+	5. C interrupt service runs
+	6. Scheduler decides which process to run next.
+	7. C procedure returns to the assembly code
+	8. Assembly language procedure starts up new current process.
 
 #process_vs_program
 Recipe is the program, the computer scientist is the processor and the cake ingredients are the input data. The process is the activity of baking the cake.
 
 #pseudoparallelism
 Awesome word.
+
+#threads
+Hovedgrunnen er at man har flere ting som foregår samtidig. Man får en enklere programmeringsmodell.
+Dette er det samme som prosesser, men det er forskjeller. Tråder ser samme data. Billigere å lage.
