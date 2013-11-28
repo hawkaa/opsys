@@ -2,9 +2,20 @@
 Abstraciton of a running program.
 Conceptually, each process has its own CPU.
 Han program, input, output and a state.
+Daemon is a background process.
 
 #process_creation
+	1. System initialization.
+	2. Execution of a process creating system call by a running process.
+	3. A user request.
+	4. Initiation of a batch job.
+Technically, all are made from a process issuing a system call.
 
+#process_termination
+	1. Normal exit
+	2. Errlor exit
+	3. Fatal error
+	4. Killed by another process
 
 #process_vs_program
 Recipe is the program, the computer scientist is the processor and the cake ingredients are the input data. The process is the activity of baking the cake.
