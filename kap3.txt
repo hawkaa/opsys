@@ -63,6 +63,14 @@ LRU - Last recently used, kast ut den som ikke har blitt brukt på en stund.
 		Bitmap med rader og kolonner.
 not frequently used - Klokke som teller r på alle sider. For hvert tick, bitskift mot høyre. fjern laveste ved page fault.
 
+Finnes to tilnærminger til LRU:
+	Not frequently used:
+		Har en teller på hver side. Hvert klokketikk telles alle sidene med R.
+		Denne glemmer aldri noe.
+	Aging:
+		Bedre enn NFU, fordi den "glemmer".
+		Høyreskifting av verdier for hvert klokketikk og setter inn R på den "tomme plassen"
+
 #demand_paging
 Når en prosess lastes inn, kommer sidene på plass etterhvert med page faults.
 
@@ -102,3 +110,6 @@ Locking a page in memory is called pinning. For IO
 
 
 #Segmentation
+Dele opp adresserom i noe som heter segmenter. Pleier å være elementer av samme type.
+Segmenter har varierende størrelse, det har ikke pages.
+Hvert segment har sin egen page table.
