@@ -5,3 +5,7 @@ Dette er et program under eksekvering. Ved hver prosess er det knyttet et adress
 	- Stack
 Ved hver prosess er det tilknyttet ressurser, som registre, filer, alarmer, relaterte prosesser og annen informasjon som må til for å kjøre programmet.
 Med andre ord: En prosess er fundamentalt sett en "boks" som holder all informasjonen vi trenger.
+Når prosessen blir byttet ut, lagres ressursene i process table.
+Tilknyttet prosessen har vi også:
+	- UID
+	
