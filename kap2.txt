@@ -54,5 +54,15 @@ Tråder samarbeider, de sloss ikke om ressursene.
 Finnes Pthreads, POSIX-standard for tråder.
 
 #threads_user_kernel_space
+User space: Kan implementeres på OS som ikke støtter flertråd.
+Fordeler med user space:
+	- OS som ikke har flertråd.
+	- Veldig rask
+	- Egen skeduleringsarlgoritme.
+Problemer med user space:
+	- Må lage "jackets" for systemkall, slik at hele prosessen ikke fryser
+	- Alle tråder må frivillig gi opp CPU, siden det ikke finnes noen interrupts.
+	- Mange applikasjoner som støtter flertråd, må gjøre mange systemkall uansett.
+	
 
 
