@@ -24,3 +24,81 @@ Håndtering av frie plasser kan skje med bitmap og med lenkede lister.
 	
 	
 #virtual_memory
+Hvordan få inn programmer som er for store til å dytte inn i minnet?
+Bryter opp adresserommet til pages.
+Programmet lager adresser, noe som egentlig bare er virtuell adresser. Adressen går til #memory_management_unit.
+
+#memory_management_unit
+mapper virtuelle adresser til fysiske adresser.
+Har present/absent bits for å finne ut hva som er i minnet og ikke.
+Hvis den ikke er i minnet, får vi page fault.
+Innslag i tabellen
+	- Protection bit (read, read/write, evt. execute)
+	- Modified (dirty bit)
+	- Referenced (hvis det er referanse, hjelper til med å finne ut hvilken side som må forkastes)
+	- Cache disable (for enheter)
+4-KB-sider og  32-bit addresserom har 1 million sider, fører til 1 million innlegg i tabellen PER prosess.
+
+#translation_lookaside_buffer
+Vi legger hele page table i minnet, men lager en egen hardwareenhet med buffer.
+Pleier å inneholde maks 64. 
+Hvis den ikke inneholder, gjør den en vanlig lookup.
+
+TLB og memory_management_unit eksisterer bare i hardware. Kan implementere TLB software management, da er soft_miss en miss i TLB, hard_miss er en miss når siden ikke er i minnet i det hele tatt.
+
+Kan ha multilevel for å unngå å ha for store tabeller. Med 64-bits adressering trenger man 30GB for å adressere alle sidene, man må bruke andre teknikker.
+
+#inverted_page_table
+Et innslag per page i ekte minne, ikke en per side i det virtuelle adresserommet.
+
+#page_replacement_algorithm
+Optimalt - Fjerne den som sist blir referert til. Umulig, med andre ord.
+not recently used - Klokke som for hvert tikk fjerner referenced. Deler opp i klasser og fjerner alltid en fra den laveste klassen.
+Fifo - nuff said
+second-chance - FIFO med en ekstra sjanse. Hvis ikke referert, kast, hvis referert, sett ref=0 og sett bakerst.
+clock - Samme som second chance, men ingen flytting av sider.
+LRU - Last recently used, kast ut den som ikke har blitt brukt på en stund.
+	Implementeres i hardware
+		Counter
+		Bitmap med rader og kolonner.
+not frequently used - Klokke som teller r på alle sider. For hvert tick, bitskift mot høyre. fjern laveste ved page fault.
+
+#demand_paging
+Når en prosess lastes inn, kommer sidene på plass etterhvert med page faults.
+
+#working_set
+Prøve å finne ut hva prosessen bruker for prepaging, slik at alt kan lastes inn ved prosessorskift.
+Når du får page fault, fjern en som ikke er i working set.
+Bestemme:
+	Hvert klokketikk, hvis R=1, skriv til time of last use. Ha et threshold T for hva som er i working set og ikke.
+	
+#WSClock page replacement algorithm
+Liste med sider er en ring med R-bit og time_of_last_use.
+Ved page fault, sjekk innslag ved hånden. Hvis R=1, sett R=0 og fortsett.
+Hvis R=0, må man sjekke time_of_last_use om < T. Hvis siden er skitten, blir den satt til å bli skrevet, og algoritmen fortsetter.
+
+#local_global_replacement
+Local kan skape trashing.
+PFF kan brukes til å justere en prosess sin andel av minnet.
+
+#load_control
+En god måte å redusere antall prosesser som bruker minnet, er å swappe dem ut.
+
+#page_size
+Internal fragmentation: i snitt vil halve siste-siden være ubrukt.
+
+#deling_av_sider
+Man kan dele sider ved å sette dem som READ ONLY ved fork. Kun når man skriver til dem får man READ-WRITE.
+
+#shared_library
+Ikke kompiler inn funksjonene, men la de ligge eksternt. Disse må bare bruke relative minnereferanser, siden de ikke kan hoppe hvor som helst ("tilfeldig" hvor de ligger)
+
+#problemer
+Hvilken minnereferanse skapte page fault?
+CPU lagrer det i et hemmelig register.
+
+#pinning
+Locking a page in memory is called pinning. For IO
+
+
+#Segmentation
