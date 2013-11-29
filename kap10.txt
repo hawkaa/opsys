@@ -1,0 +1,46 @@
+#interfaces_to_linux
+Library følger med, som er skrevet i assemly.
+Tre lag:
+	1. True system call interface
+	2. Standard library mellomfjes
+	3. Standard utility program interface
+	
+#kernel_structure
+Delt opp i tre:
+	IO
+	Memory management
+	Process management
+	
+#processes_in_linux
+I utgangspunktet har hver prosess én tråd, men kan lage flere.
+Processes are named by their PID.
+Kan kommunisere gjennom pipes
+Prosesser kan sende signal til hverandre.
+exev-kall og lignende erstatter en prosses kjernebilde.
+Hvis en prosess kjører seg ferdig og ingen venter, blir det zombie.
+
+#processes_and_threads
+
+#implementation of the linux file system
+Linux bruker VFS, altså et abstraksjonslag.
+VFS støtter superblock, dentry, I-node og file.
+	Superblokk: Viktig informasjon om filsystemet
+	I-node: Skal beskrive akkurat en fil
+	Dentry: Struktur for mappe
+	File: åpen fil, som read, write.
+	
+#ext2
+Første blokken (nr. 2) er en superblokk. Inneholder informasjon om filsystemet, hvor mange i-noder og hvor mange blokker, og starten på listen av frie blokker.
+Etter dette kommer group descriptor, inneholder informasjom om bitmaps, hvor mange frie blokker og i-noder i gruppen, og hvor mange mapper i gruppen. ext2 sprer mapper jevnt over disken.
+To bitmaps passer på frie blokker og frie i-noder. Kun én blokk.
+Etter dette kommer i-nodene selv. Hver er 128 bytes og beskriver akkurat én fil.
+Etter dette kommer data.
+I-noder tilknyttet directories er spredt over diskblokk-gruppene. Ext2 prøver å ha alle filene i samme blokkgruppe som foreldredirectoriet.
+
+ext2 preallokerer åtte ekstra blokker når en fil blir opprettet.
+Et directoryinnslag inneholder fire fixed-length og et variabelt.
+Lineært søk.
+Relativt/absolutt er ikke bare enkelt for brukeren, det er faktisk god stemning for OS
+
+Finner et i-node-nummer. Denne blir hentet inn etter et oppslag, og dyttet inn i i-node table, for åpne filer.
+Har en open file description table.

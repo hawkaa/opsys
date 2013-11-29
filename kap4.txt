@@ -89,3 +89,36 @@ Systemet kan kræsje i mellom disse.
 Når et jfs gjør dette skriver den ned alle handlinger til disken først.
 Vitkig at alle operasjoner er #idempotent, som gjør at de kan gjøres så mange ganger som mulig uten at det blir tull.
 Kan abstraheres til transaksjoner med begin og end, slik at flere oprasjoner blir atomiske.
+
+#VFS
+Konsept for å abstrahere ut alle forskjellige filsystem til et felles mellomfjes.
+VFS har definert et mellomfjes som filsystemene må støtte.
+
+#File system management
+De fleste filsystemer bruker blokker som ikke trenger å følge etter hverandre.
+Størrelse på blokk: For stor, kaste bort plass, for liten, kaste bort tid.
+
+#free_blocks
+Linked list with free blocks. Her trenger bare én å være i minnet av gangen. Kan bli mye IO. Prøv å holde en halvfull i minnet.
+Bitmaps.
+
+#disk_quota
+Brukere må ikke bruke for mye plass.
+
+#backup
+To problemer:
+	- Recover from disaster
+	- Recover from stupidity
+	
+#incremental dumps
+Sparer tid.
+Finnes gode algoritmer for å ta backup av et system i bruk.
+To medotder:
+	- Fysisk dump: Veldig kjapt, men kan ikke hoppe over mapper, kan ikke ta inkrementelle dumper og ikke gjenopprette enkelte filer.
+	- Logisk dump: Dumper mapper og filer over i et annet filsystem.
+	
+#file_system_consistency
+Systemet havner av og til i en inconsistent state. Teller over blokker i bruk og frie blokker.
+Hvis den finner samme blokk på to filer, kopiér blokken.
+Kan også sammenligne i-nodene i mapper med hvor mange referanser det finnes lagret i hver fil. Juster inodetelleren deretter.
+
