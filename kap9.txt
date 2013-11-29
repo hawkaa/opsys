@@ -1,0 +1,9 @@
+#malware
+Trojansk hest: Pakke inn malware i et annet program som ser "legit" ut.
+Virus: Et program som kan installere seg selv ved å henge seg på et annet program
+	1. Minneresidente: Gjemmer seg i avbruddsrutiner
+	2. Boot-sektorvirus
+	3. Device driver-virus
+Worms: Selvreplikerende program som sprer seg selv
+Spyware: Gjemmer seg og samler informasjon
+Rootkits: Program som gir root-aksess og gjemmer seg.

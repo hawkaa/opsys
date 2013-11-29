@@ -1,0 +1,148 @@
+#Multiple Processor Systemns
+Begynner å nærme oss grensen
+Alt summer ned til meldingssending
+Shared memory
+Interconnect
+
+#multiprocessor
+tilgang til felles RAM
+UMA (lik aksesstid på alle ord)
+NUMA (non-uniform, ikke som over)
+
+Må være forsiktig med caching. Dette skaper mye mindre buss-trafikk.
+Man legger inn blokker i cache, kalles cache lines.
+Blir markert read-only eller read-write.
+Dersom en vil ha, må de andre forkaste seg med sin kopi.
+Reglene heter #cache_coherence_protocol
+Kan ha privat minne til read-only data
+
+Ønsker å koble sammen flere prosessorer
+#cross_bar switch: n CPU, k memories.
+Skalerer dårlig, k*n crosspoints
+
+#multistage_switching_networks
+omeganettverk med log(n) steg og N/2 per steg
+
+Spre minne: Bruke lower order bits
+
+#NUMA:
+	1. Samme adresserom for alle CPU
+	2. aksess til fjernt minne er med load og store
+	3. Tar lengere tid å hente fjernt minne
+	
+#snooping: Automatisk fjerning av cache dersom en annen prosess skitner linjen til.
+
+#operating_system_types
+Hver cpu kan ha privat kopi
+Lett å otimere med at de bare har datastrukturer.
+Fortsatt bedre enn bare én maskin.
+Ingen deling av prossesr, ingen sidedeling.
+Bufferproblemer.
+
+Master slave
+En master med OS og datastrukturer. Delegerer arbeid, da blir master flaskehals.
+
+Symmetric multiprocessor
+En kopi i minnet, alle CPU kan kjøre den.
+Konflikter, løses med mutex
+Dele opp OS i flere kritiske regioner. Flere mutexer.
+Vanskelig å lage.
+
+#Multiprocessor synchronization
+Hjertet er TSL (atomisk intruksjon), men denne blir brutt med MP!!
+TSL må først låse bussen, så gjøre memory access, så låse opp.
+Blir spin lock. Hopper mellom lock requestor og lock owner. Trashing!!
+Gjøre leseoperasjon først.
+Bruke ethernet backoff
+
+#spinning vs switching
+Hvis den ikke får tak i noe, bytt tråd/prosess. Begge sløser sykler
+Enten eller eller gjøre en vurdering hver gang? Kan samle inn data.
+
+To dimensjoner: Hvilken tråd og hvilken CPU
+Kan ha flagg, passe på å ikke vekke en tråd som sitter i spin lock
+Kan være lurt å la en tråd fortsette på samme CPU
+
+#space_sharing
+Hvordan dele opp i rom
+
+#gang_scheduling
+Dele i tid og i rom samtidig
+	Gruppere relaterte tråder i en "gang"
+	Alle i gangen kjører samtidig
+	
+	Følge: Tidskvantum gjelder alle CPU
+	
+#Multicomputers
+"Stripped down pc with addition of high-performance network interface card"
+Sende meldinger fort, men ikke like fort som ved delt minne
+
+#interconnection
+diameter: Lengste distanse mellom to noder
+Ruting: Store N forward og circuit switching (KTN-ting)
+
+brukerkall: Blocking or nonblocking
+
+#RPC
+Kalle metoder på en annen CPU
+Se så "lokal ut" som mulig
+marshalling: Pakke argumenter
+Problemer med pekere.
+
+#distributed shared memory
+Virker som det er delt minne.
+
+#replication
+Replisere sidene som er read only
+
+#false_sharing: To variable på samme side blir sendt mellom to prosseser
+
+#sequential_consistency
+Hvis skrivbare sider ikke er replisert, blir det ikke vanskelig å oppnå konsistens.
+Dersom man prøver å skrive til en cachet side, må man invalidere resten.
+
+#multicomuter_scheduling
+hver CPU har sine egne prosesser
+
+#load_balancing
+Viktig å bestemme hvem som skal få en ny prosess.
+
+vektet graf, med last mellom to prosesser som kanter. Minimer snittene.
+
+#sender-initiated dstributed heuristic
+Legg på hvemsomhelst som ikke er overbelastet. Men da maser man på prosesser som allerede har mye last
+
+#reciever initiated distributed heuristic
+En prosessor med lite å gjøre spør andre om den kan få noen prosesser. Legger ikke unødvendig last i "harde tider"
+
+
+
+#VIRTUALIZATION
+Enkel maskin kjører flere virtuelle maskiner.
+Unngår softwarefeil i større grad, selv om konsekvensene av hardwarefeil er større.
+Lett å flytte.
+
+#requirements
+
+#type1hypervisor
+Må støtte kopier av hardware
+
+Virtuell kernelmodus: Kaller hypervisoren med instruksjoner som lager trap. Den sjekker om instruksjonen kommer fra et guest OS og eksekverer deretter
+
+#type2hypervisor
+User program.
+Fordi det ikke ble traps, men bare ignorert, måtte man kjøre interpreters.
+Virtuelle disker
+Leser igjennom programmet og bytter ut instruksjoner.
+Sensitive instruksjoner blir oversatt og emulert.
+
+#paravirtualization
+#type1hypervisor og #type2hypervisor fungerer med vanlige OS.
+Endre kildekode, slik at den ungår sensitive instruksjoner og heller kaller hypervisoren.
+Hypervisor blir en mikrokjerne.
+
+
+Begge må oppføre seg som hardware.
+
+#sensitive_instruction: Må kjøres i kernel mode
+#priveleged_instruction: Lager trap i user mode
