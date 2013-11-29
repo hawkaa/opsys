@@ -1,0 +1,98 @@
+#Input Output
+Et operativsystem må styre IO-enheter og lage et rent grensesnitt for resten av systemet.
+
+Deles opp i blokk devices og character devicets.
+Character device leverer/aksepterer en strøm av karakterer.
+
+#device controllers
+En enhet består av en mekanisk komponent og en elektronisk komponent. Den elektroniske heter device kontroller. Den mekaniske er enheten selv.
+Mange lager kontrollere som matcher standarder (som IDE SATA)
+kontrolleren leverer block of bytes og gjør error correction
+
+#memory_mapped_io
+En kontroller har noen registre som CPU kan skrive til for å kommandere/kommunisere.
+Har også et buffer.
+To alternativer:
+	IO-portnummer
+	Memory mapped io
+		Hvert register ligger i"minnet"
+		Fordel fordi man ikke tregner spesielle intruksjoner.
+		Slipper å passe på brukerne
+		Kan bruke vanlige instruksjoner rett på minnet, slipper å lese inn først.
+		Egen mekanisme for å unngå caching
+		Vanskelig hvis man har egen memory-bus
+		
+		
+uansett, så bruker den vanlig read. Hvis det bare er minne, sjekker enhetene adressen.
+
+#DMA
+Jobber på egenhånd med å hente data fra IO-enheter. Legger alt i minnet.
+
+#cycle_stealing DMA stjeler bussen fra CPU
+#burst_mode DMA vil ha mange blokker av gangen.
+
+#interrupts
+setter signal på egen linje, CPU slår opp i interrupt kontroller. Slipper hva den drev med og starter behandling av interrupt
+Den sender ack når den har begynt.
+Lagrer program counter før den begynner.
+
+#precise_imprecise_interrupts
+Precise, veldefinert:
+	1. PC lagret
+	2. Alle instruksjoner FØR PC er ferdig
+	3. INGEN intruksjoner etter har blitt kjørt
+	4. Eksekveringsstadiet til PC er kjent.
+	
+#Prinsipper
+Device independence, skrive programmer uten å vite hva slags enhet vi har.
+Uniform naming: Enkelt navn på enheten.
+Feil skal håndteres så langt nede som mulig.
+
+#programmed_io: Venter på at feks en printer skal bli klar. "tight loop". Blir ofte polling eller busy waiting
+#interrupt_driven_io: Sette i gang og la enheten sende interrupt når den er ferdig med en ting.
+
+DMA kan fikse. Da får man interrupt en per buffer, ikek per bokstav.<
+DMA kan være treg, så hvis CPU ikke har annet å gjøre, sååå
+
+
+#Software layers
+
+#interrupt handlers
+Driveren bør blokke, ikke være asynkron. Interrupt handler kan fjerne blokkingen.
+
+#device dirver
+Mange forskjellige registre per kontroller. Trenger devicespesifikk kode, dette er #device_driver. Skrevet av fabrikanten og levert med.
+Driverne må være en del av OS-kjernen siden den skal skrive til registre og sånn.
+Trenger et veldefinert grensesnitt, siden andre skal skrive drivere.
+Standard mellomfjes for blokk- og karaterenheter.
+Man kan kompilere driverne inn.
+Mye funksjonalitet:
+	Akseptere device independent kall og se at de blir kjørt.
+	Initialisere enheten
+	passe på strøm
+	logge hendelser
+	
+Driveren kan sjekke for feil.
+Driveren kan bli forstyrret av seg selv.
+Driveren får et begrenset sett med instruksjoner
+For hver klasse med enheter, har OS et mellomfjes som må støttes.
+
+#errors
+Det er veldig vanlig med feil i IO.
+Klasser:
+	programming errors - Gi feilmelding
+	actual errors - Opp til driveren
+Én av gangen, kalle "open" på filen, slik at flere ikke får tilgang.
+
+#spooling
+Lage en egen daemon og et directory. Brukere legger filer i dette directory, så tar daemon seg av å sende dette til enheten.
+
+#Klokker
+Vanligst med krystall.
+One-hot og square-wave mode (clock ticks)
+Hardwareklokker gir bare interrupts i gitte intervaller
+Simulere flere klokker med lenket liste
+watch-dog-timers: Kaller prosedyre når ferdig.
+
+#soft timers
+Sjekker klokken på vei ut av kernel mode
