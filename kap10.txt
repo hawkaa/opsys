@@ -1,3 +1,6 @@
+
+## KAPITTEL 10 ##
+
 #interfaces_to_linux
 Library følger med, som er skrevet i assemly.
 Tre lag:

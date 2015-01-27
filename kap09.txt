@@ -1,3 +1,6 @@
+
+## KAPITTEL 9 ##
+
 #malware
 Trojansk hest: Pakke inn malware i et annet program som ser "legit" ut.
 Virus: Et program som kan installere seg selv ved å henge seg på et annet program

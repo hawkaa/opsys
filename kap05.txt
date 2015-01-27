@@ -1,3 +1,6 @@
+
+## KAPITTEL 5 ##
+
 #Input Output
 Et operativsystem må styre IO-enheter og lage et rent grensesnitt for resten av systemet.
 

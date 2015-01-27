@@ -1,3 +1,6 @@
+
+## KAPITTEL 4 ##
+
 #hva krever vi an en fil?
 	1. Lagre store mengder data
 	2. Overleve etter at en prosess har dødd

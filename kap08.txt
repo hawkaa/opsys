@@ -1,3 +1,6 @@
+
+## KAPITTEL 8 ##
+
 #Multiple Processor Systemns
 Begynner å nærme oss grensen
 Alt summer ned til meldingssending
